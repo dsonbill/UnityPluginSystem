@@ -31,11 +31,6 @@ public class PluginSystem : MonoBehaviour
 {
     readonly List<IGamePlugin> loadedPlugins = new List<IGamePlugin>();
 
-    public PluginSystem()
-    {
-        AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-    }
-
     Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {
         //This will find and return the assembly requested if it is already loaded
@@ -159,6 +154,7 @@ public class PluginSystem : MonoBehaviour
         {
             GameObject.Destroy(this.gameObject);
         }
+		AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         DontDestroyOnLoad(this);
         LoadPlugins();
         foreach (var plugin in loadedPlugins)
