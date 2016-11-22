@@ -155,6 +155,10 @@ public class PluginSystem : MonoBehaviour
     //Fire Initialize
     public void Awake()
     {
+        if (GameObject.FindObjectsOfType<PluginSystem>().Length > 1)
+        {
+            GameObject.Destroy(this.gameObject);
+        }
         DontDestroyOnLoad(this);
         LoadPlugins();
         foreach (var plugin in loadedPlugins)
