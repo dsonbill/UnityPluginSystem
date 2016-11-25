@@ -31,15 +31,10 @@ public interface IGamePlugin
     /// Fires in Initialize. Put your non-graphics loading here.
     /// </summary>
     void Initialize();
-    /// <summary>
-    /// Fires in Draw. All draw code must be here.
-    /// </summary>
-    void OnGUI();
 }
 
 public abstract class GamePlugin : IGamePlugin
 {
     public virtual void Update() { }
     public virtual void Initialize() { }
-    public virtual void OnGUI() { }
 }

@@ -154,7 +154,7 @@ public class PluginSystem : MonoBehaviour
         {
             GameObject.Destroy(this.gameObject);
         }
-		AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         DontDestroyOnLoad(this);
         LoadPlugins();
         foreach (var plugin in loadedPlugins)
@@ -167,25 +167,6 @@ public class PluginSystem : MonoBehaviour
             {
                 Type type = plugin.GetType();
                 Debug.Log ( "Exception thrown in Initialize event for " +
-                    type.FullName + " (" + type.Assembly.FullName + ")");
-                Debug.LogException(e);
-            }
-        }
-    }
-
-    //Fire Draw
-    public void OnGUI()
-    {
-        foreach (var plugin in loadedPlugins)
-        {
-            try
-            {
-                plugin.OnGUI();
-            }
-            catch (Exception e)
-            {
-                Type type = plugin.GetType();
-                Debug.Log ("Exception thrown in Draw event for " +
                     type.FullName + " (" + type.Assembly.FullName + ")");
                 Debug.LogException(e);
             }
