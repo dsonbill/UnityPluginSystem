@@ -21,20 +21,23 @@
 
 
 
-public interface IGamePlugin
+namespace UnityPluginSystem
 {
-    /// <summary>
-    /// Fires in update. Put your game logic here.
-    /// </summary>
-    void Update();
-    /// <summary>
-    /// Fires in Initialize. Put your non-graphics loading here.
-    /// </summary>
-    void Initialize();
-}
-
-public abstract class GamePlugin : IGamePlugin
-{
-    public virtual void Update() { }
-    public virtual void Initialize() { }
+    public interface IGamePlugin
+    {
+        /// <summary>
+        /// Fires in update. Put your game logic here.
+        /// </summary>
+        void Update();
+        /// <summary>
+        /// Fires in Initialize. Put your non-graphics loading here.
+        /// </summary>
+        void Initialize();
+    }
+    
+    public abstract class GamePlugin : IGamePlugin
+    {
+        public virtual void Update() { }
+        public virtual void Initialize() { }
+    }
 }
