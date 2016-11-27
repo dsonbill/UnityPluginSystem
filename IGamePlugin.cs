@@ -30,7 +30,7 @@ namespace UnityPluginSystem
         /// </summary>
         void Update();
         /// <summary>
-        /// Fires in Initialize. Put your non-graphics loading here.
+        /// Fires in Initialize. Put your loading here.
         /// </summary>
         void Initialize();
     }

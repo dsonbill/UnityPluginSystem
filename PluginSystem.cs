@@ -31,6 +31,7 @@ namespace UnityPluginSystem
 {
     public class PluginSystem : MonoBehaviour
     {
+        public bool logging = true;
         readonly List<IGamePlugin> loadedPlugins = new List<IGamePlugin>();
     
         Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
@@ -40,18 +41,18 @@ namespace UnityPluginSystem
             {
                 if (assembly.FullName == args.Name)
                 {
-                    Debug.Log("UnityPluginSystem: Resolved plugin assembly reference: " + args.Name);
+                    if (logging) Debug.Log("UnityPluginSystem: Resolved plugin assembly reference: " + args.Name);
                     return assembly;
                 }
             }
-    
-            Debug.Log("UnityPluginSystem: Could not resolve assembly " + args.Name);
+
+            if (logging) Debug.Log("UnityPluginSystem: Could not resolve assembly " + args.Name);
             return null;
         }
     
         public void LoadPlugins()
         {
-            Debug.Log("UnityPluginSystem: Loading plugins...");
+            if (logging) Debug.Log("UnityPluginSystem: Loading plugins...");
             if (!Directory.Exists (Path.Combine(Environment.CurrentDirectory, "Plugins"))) {
                 Directory.CreateDirectory (Path.Combine(Environment.CurrentDirectory, "Plugins"));
             }
@@ -66,8 +67,8 @@ namespace UnityPluginSystem
                         assemblies.Add (currentAssembly);
                     } catch (Exception e) {
                         //Something went horribly wrong - do an LogExcep for them
-                        Debug.Log("UnityPluginSystem: Exception thrown loading assembly " + pluginPath);
-                        Debug.LogException(e);
+                        if (logging) Debug.Log("UnityPluginSystem: Exception thrown loading assembly " + pluginPath);
+                        if (logging) Debug.LogException(e);
                     }
                 }
             }
@@ -90,7 +91,7 @@ namespace UnityPluginSystem
                     }
                     if (containsPluginInterface)
                     {
-                        Debug.Log("UnityPluginSystem: Loading plugin: " + loadedType.FullName);
+                        if (logging) Debug.Log("UnityPluginSystem: Loading plugin: " + loadedType.FullName);
     
                         try
                         {
@@ -98,24 +99,24 @@ namespace UnityPluginSystem
     
                             if (pluginInstance != null)
                             {
-                                Debug.Log("UnityPluginSystem: Plugin loaded");
+                                if (logging) Debug.Log("UnityPluginSystem: Plugin loaded");
                                 loadedPlugins.Add(pluginInstance);
                             }
                         }
                         catch (Exception excep)
                         {
-                            Debug.Log ("UnityPluginSystem: Exception thrown loading plugin " +
+                            if (logging) Debug.Log ("UnityPluginSystem: Exception thrown loading plugin " +
                                 loadedType.FullName + "(" + loadedType.Assembly.FullName + ")");
-                            Debug.LogException(excep);
+                            if (logging) Debug.LogException(excep);
                         }
                     }
 					else
 					{
-						Debug.Log("UnityPluginSystem: Nothing to load in plugin: " + loadedType.FullName);
+                        if (logging) Debug.Log("UnityPluginSystem: Nothing to load in plugin: " + loadedType.FullName);
 					}
                 }
             }
-            Debug.Log("UnityPluginSystem: Done!");
+            if (logging) Debug.Log("UnityPluginSystem: Done!");
         }
     
         private IGamePlugin ActivatePluginType(Type loadedType)
@@ -128,8 +129,8 @@ namespace UnityPluginSystem
             }
             catch (Exception e)
             {
-                Debug.Log ("UnityPluginSystem: Exception thrown while activating plugin " + loadedType.Name);
-                Debug.LogException(e);
+                if (logging) Debug.Log ("UnityPluginSystem: Exception thrown while activating plugin " + loadedType.Name);
+                if (logging) Debug.LogException(e);
                 return null;
             }
         }
@@ -146,9 +147,9 @@ namespace UnityPluginSystem
                 catch (Exception e)
                 {
                     Type type = plugin.GetType();
-                    Debug.Log ("UnityPluginSystem: Exception thrown in Update event for " +
+                    if (logging) Debug.Log ("UnityPluginSystem: Exception thrown in Update event for " +
                         type.FullName + " (" + type.Assembly.FullName + ")");
-                    Debug.LogException(e);
+                    if (logging) Debug.LogException(e);
                 }
             }
         }
@@ -172,9 +173,9 @@ namespace UnityPluginSystem
                 catch (Exception e)
                 {
                     Type type = plugin.GetType();
-                    Debug.Log ( "UnityPluginSystem: Exception thrown in Initialize event for " +
+                    if (logging) Debug.Log ( "UnityPluginSystem: Exception thrown in Initialize event for " +
                         type.FullName + " (" + type.Assembly.FullName + ")");
-                    Debug.LogException(e);
+                    if (logging) Debug.LogException(e);
                 }
             }
         }
